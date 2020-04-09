@@ -1,11 +1,8 @@
 const authSwitchLinks = document.querySelectorAll('.switch');
 const errorContainers = document.querySelectorAll('.error-container');
 const authModals = document.querySelectorAll('.auth-modal');
-
 const registerForm = document.querySelector('.registerForm');
-const registerFormErrorMessage = document.querySelector(
-  '.registerForm .error-container'
-);
+const loginForm = document.querySelector('.loginForm');
 
 // toggle visibility of login and register forms
 authSwitchLinks.forEach((link) => {
@@ -19,15 +16,13 @@ authSwitchLinks.forEach((link) => {
 // close error messages clicking on 'x' buttons
 errorContainers.forEach((errorMessage) => {
   errorMessage.addEventListener('click', (e) => {
-    console.log(e.target);
-    console.log(e.target.classList);
     if (e.target.classList[0] === 'close') {
       errorMessage.classList.remove('active');
     }
   });
 });
 
-// New user registration on the front-end
+// Handle new user registration
 registerForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -43,7 +38,28 @@ registerForm.addEventListener('submit', (e) => {
     })
     .catch((error) => {
       registerForm.querySelector('.error-message').textContent = error.message;
-      registerFormErrorMessage.classList.add('active');
+      registerForm.querySelector('.error-container').classList.add('active');
       registerForm.reset();
+    });
+});
+
+// Handle user login
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const email = loginForm.email.value;
+  const password = loginForm.password.value;
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      console.log('logged in', user);
+      loginForm.reset();
+    })
+    .catch((error) => {
+      loginForm.querySelector('.error-message').textContent = error.message;
+      loginForm.querySelector('.error-container').classList.add('active');
+      loginForm.reset();
     });
 });

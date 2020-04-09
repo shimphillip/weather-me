@@ -8,99 +8,105 @@
     <!-- bootstrap sketchy theme -->
     <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/styles.css" />
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.13.2/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.13.2/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.13.2/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/7.13.2/firebase-functions.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
   </head>
   <body>
     <div class="container-sm">
       <h1 class="title">Weather Me</h1>
       <br />
       <!-- Register -->
-
+      <!-- Register -->
       <!-- Register -->
 
-      <!-- Register -->
-
-      <form class="auth-modal">
+      <form class="registerForm auth-modal">
+        <div class="error-container alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button>
+          <strong>Oh snap!</strong>
+          <a href="#" class="error-message alert-link"
+            >Change a few things up</a
+          >
+        </div>
         <fieldset>
           <legend>Register</legend>
           <br />
           <div class="form-group">
-            <label for="register_email">Email</label>
+            <label for="email">Email</label>
             <input
               type="email"
               class="form-control form-control-lg"
-              id="register_email"
-              name="register_email"
+              name="email"
               aria-describedby="email"
               placeholder="Pengsoo@ebs.com"
             />
             <small class="form-text text-muted"
-              >I will never share your email with anyone else.</small
+              >I will never share your email with anyone else 🙊.</small
             >
           </div>
           <div class="form-group">
-            <label for="register_password">Password</label>
+            <label for="password">Password</label>
             <input
               type="password"
               class="form-control form-control-lg"
-              id="register_password"
-              name="register_password"
+              name="password"
               placeholder="Password"
             />
             <small class="form-text text-muted"
-              >Your password is safely hashed by Firestore.</small
+              >Your password is safely hashed by Firestore 🔥.</small
             >
           </div>
 
           <br />
           <div>
             Already have an account?
-            <a href="#" class="switch" id="registerLink">Register instead</a>
+            <a href="#" class="switch" id="registerLink">Login instead</a>
           </div>
           <br />
-          <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+          <button
+            type="submit"
+            id="registerButton"
+            class="btn btn-lg btn-primary"
+          >
+            Submit
+          </button>
         </fieldset>
       </form>
 
       <!-- LOGIN -->
-
+      <!-- LOGIN -->
       <!-- LOGIN -->
 
-      <!-- LOGIN -->
-
-      <form class="auth-modal active">
+      <form class="loginForm auth-modal active">
+        <div class="error-container alert alert-dismissible alert-danger">
+          <button type="button" class="close" data-dismiss="alert">
+            &times;
+          </button>
+          <strong>Oh snap!</strong>
+          <a href="#" class="alert-link">Change a few things up</a> and try
+          submitting again.
+        </div>
         <fieldset>
           <legend>Login</legend>
           <br />
           <div class="form-group">
-            <label for="login_email">Email</label>
+            <label for="email">Email</label>
             <input
               type="email"
               class="form-control form-control-lg"
-              id="login_email"
-              name="login_email"
+              name="email"
               aria-describedby="email"
               placeholder="YourEmail@example.com"
             />
             <small class="form-text text-muted"
-              >I hope you remember your email 🙊.</small
+              >I hope you remember your email 🙏.</small
             >
           </div>
           <div class="form-group">
-            <label for="login_password">Password</label>
+            <label for="password">Password</label>
             <input
               type="password"
               class="form-control form-control-lg"
-              id="login_password"
-              name="login_password"
+              name="password"
               placeholder="Password"
             />
             <small class="form-text text-muted"
@@ -132,6 +138,14 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"
         ></script> -->
+      <!-- update the version number as needed -->
+      <script src="/__/firebase/7.13.2/firebase-app.js"></script>
+      <!-- include only the Firebase features as you need -->
+      <script src="/__/firebase/7.13.2/firebase-auth.js"></script>
+      <script src="/__/firebase/7.13.2/firebase-firestore.js"></script>
+      <script src="/__/firebase/7.13.2/firebase-functions.js"></script>
+      <!-- initialize the SDK after all desired features are loaded -->
+      <script src="/__/firebase/init.js"></script>
       <script src="./js/auth.js"></script>
     </div>
   </body>

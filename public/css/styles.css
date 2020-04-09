@@ -32,3 +32,11 @@ form {
 .auth-modal.active {
   display: block;
 }
+
+.error-container {
+  display: none;
+}
+
+.error-container.active {
+  display: block;
+}

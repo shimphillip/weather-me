@@ -1,0 +1,34 @@
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-sm {
+  max-width: 540px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+/* FORM */
+
+form {
+  padding: 2rem;
+  border: 3px solid black;
+  border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.auth-modal {
+  display: none;
+}
+.auth-modal.active {
+  display: block;
+}

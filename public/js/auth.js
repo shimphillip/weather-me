@@ -3,6 +3,9 @@ const errorContainers = document.querySelectorAll('.error-container');
 const authModals = document.querySelectorAll('.auth-modal');
 const registerForm = document.querySelector('.registerForm');
 const loginForm = document.querySelector('.loginForm');
+const dashBoard = document.querySelector('.dashboard');
+const logout = document.querySelector('.logout');
+const deleteAccount = document.querySelector('.deleteAccount');
 
 // toggle visibility of login and register forms
 authSwitchLinks.forEach((link) => {
@@ -35,6 +38,9 @@ registerForm.addEventListener('submit', (e) => {
     .then((user) => {
       console.log('registered', user);
       registerForm.reset();
+      errorContainers.forEach((errorMessage) => {
+        errorMessage.classList.remove('active');
+      });
     })
     .catch((error) => {
       registerForm.querySelector('.error-message').textContent = error.message;
@@ -56,10 +62,49 @@ loginForm.addEventListener('submit', (e) => {
     .then((user) => {
       console.log('logged in', user);
       loginForm.reset();
+      errorContainers.forEach((errorMessage) => {
+        errorMessage.classList.remove('active');
+      });
     })
     .catch((error) => {
       loginForm.querySelector('.error-message').textContent = error.message;
       loginForm.querySelector('.error-container').classList.add('active');
       loginForm.reset();
     });
+});
+
+// logout
+logout.addEventListener('click', () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => console.log('user signed out'));
+});
+
+// delete user
+deleteAccount.addEventListener('click', () => {
+  const user = firebase.auth().currentUser;
+
+  user
+    .delete()
+    .then(() => {
+      // TODO: alert user
+    })
+    .catch((error) => {
+      // An error happened.
+    });
+});
+
+// auth listener
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // open dashboard
+    authModals.forEach((modal) => modal.classList.remove('active'));
+    dashBoard.classList.add('active');
+    document.querySelector('.navbar-brand').textContent = trimEmail(user.email);
+  } else {
+    // open login form
+    authModals[1].classList.add('active');
+    dashBoard.classList.remove('active');
+  }
 });

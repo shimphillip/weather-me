@@ -40,3 +40,14 @@ form {
 .error-container.active {
   display: block;
 }
+
+/* Dashboard */
+
+.dashboard {
+  display: none;
+}
+
+.dashboard.active {
+  display: block;
+  padding: 1rem;
+}

@@ -5,18 +5,17 @@ const cors = require('cors')({ origin: true });
 const admin = require('firebase-admin');
 admin.initializeApp();
 
-exports.sendMessagePlease = functions.https.onRequest(async (req, res) => {
-  cors(req, res, () => {
-    axios
-      .get(
+exports.sendMessage = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const { data } = await axios.get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=78754&APPID=${process.env.OPEN_WEATHER_MAP_API}`
-      )
-      .then((data) => {
-        console.log(data);
-        console.log(data.data);
-        return res.status(200).send(data.data);
-      })
-      .catch((error) => res.send(error));
+      );
+
+      return res.status(200).send(data);
+    } catch (error) {
+      res.status(400).send(error);
+    }
   });
 
   // const client = require('twilio')(

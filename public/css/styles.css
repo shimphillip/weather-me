@@ -16,7 +16,7 @@ body {
 
 /* FORM */
 
-form {
+form.auth-modal {
   padding: 2rem;
   border: 3px solid black;
   border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
@@ -50,4 +50,8 @@ form {
 .dashboard.active {
   display: block;
   padding: 1rem;
+}
+
+form.dashboard-form {
+  border: none;
 }

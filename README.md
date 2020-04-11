@@ -19,3 +19,11 @@ Todo
 2. Give users a settings page
 3. User can ask to receive daily forecast each morning
 4. user receives a message
+
+// Method 1
+Create multiple scheduled functions that run one hour interval.
+Scrape through all the users in the database and see if their info matches this timeset
+Run the function
+
+// Method 2
+Simply creat one scheduled function and have all users receive the texts

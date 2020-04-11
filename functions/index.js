@@ -5,6 +5,23 @@ const cors = require('cors')({ origin: true });
 const admin = require('firebase-admin');
 admin.initializeApp();
 
+// auth trigger (new user signup)
+exports.newUserSignUp = functions.auth.user().onCreate((user) => {
+  // background trigger returns a value/promise
+  return admin.firestore().collection('users').doc(user.uid).set({
+    email: user.email,
+    phoneNumber: '',
+    zipcode: '',
+    time: '',
+  });
+});
+
+// auth trigger (delete user)
+exports.userDeleted = functions.auth.user().onDelete((user) => {
+  const doc = admin.firestore().collection('users').doc(user.uid);
+  return doc.delete();
+});
+
 exports.sendMessage = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     try {

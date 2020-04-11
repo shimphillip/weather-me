@@ -55,7 +55,6 @@
               >Your password is safely hashed by Firestore 🔥.</small
             >
           </div>
-
           <br />
           <div>
             Already have an account?
@@ -169,8 +168,8 @@
         <!-- Dashboard -->
 
         <p class="lead mt-4">
-          This is a simple hero unit, a simple jumbotron-style component for
-          calling extra attention to featured content or information.
+          Weather Me sends daily text on user's location on selected user's
+          selected time
         </p>
         <hr class="my-4" />
 
@@ -179,56 +178,72 @@
             <div class="form-group">
               <label for="phoneNumber">Phone Number</label>
               <input
-                type="number"
+                type="tel"
                 class="form-control"
                 id="phoneNumber"
                 name="phoneNumber"
                 aria-describedby="Phone number"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 placeholder="ex) 512-788-3939"
               />
               <small id="emailHelp" class="form-text text-muted"
-                >Your phone number with area code with dashes</small
+                >Your phone number with area code with dashes ☎</small
               >
             </div>
-          </fieldset>
-          <fieldset class="form-group">
-            <legend>Pick a time to receive weather messages</legend>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="optionsRadios"
-                  id="optionsRadios1"
-                  value="option1"
-                  checked=""
-                />
-                7AM Central Time
-              </label>
+            <div class="form-group">
+              <label for="zipCode">Zip Code</label>
+              <input
+                type="text"
+                class="form-control"
+                id="zipCode"
+                name="zipCode"
+                pattern="[0-9]{5}"
+                aria-describedby="Zip code"
+                placeholder="ex) 78613"
+              />
+              <small id="emailHelp" class="form-text text-muted"
+                >Your zipcode 🏠
+              </small>
             </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="optionsRadios"
-                  id="optionsRadios2"
-                  value="option2"
-                />
-                8AM Central Time
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input
-                  type="radio"
-                  class="form-check-input"
-                  name="optionsRadios"
-                  id="optionsRadios2"
-                  value="option2"
-                />
-                9AM Central Time
-              </label>
+            <div class="form-group">
+              <legend>Pick a time to receive weather messages</legend>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="optionsRadios"
+                    id="optionsRadios1"
+                    value="option1"
+                    checked=""
+                  />
+                  7AM Central Time
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="optionsRadios"
+                    id="optionsRadios2"
+                    value="option2"
+                  />
+                  8AM Central Time
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    name="optionsRadios"
+                    id="optionsRadios2"
+                    value="option2"
+                  />
+                  9AM Central Time
+                </label>
+              </div>
             </div>
           </fieldset>
         </form>

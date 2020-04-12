@@ -75,10 +75,13 @@ loginForm.addEventListener('submit', (e) => {
 
 // logout
 logout.addEventListener('click', () => {
+  console.log('clicking');
+
   firebase
     .auth()
     .signOut()
-    .then(() => console.log('user signed out'));
+    .then(() => console.log('user signed out'))
+    .catch((error) => console.log(error));
 });
 
 // delete user
@@ -102,9 +105,22 @@ firebase.auth().onAuthStateChanged((user) => {
     authModals.forEach((modal) => modal.classList.remove('active'));
     dashBoard.classList.add('active');
     document.querySelector('.navbar-brand').textContent = trimEmail(user.email);
+
+    // load vue instance
+    const app = document.createElement('script');
+    app.setAttribute('src', './js/app.js');
+    app.setAttribute('id', 'appScript');
+    document.head.appendChild(app);
   } else {
+    console.log('user logged out');
     // open login form
     authModals[1].classList.add('active');
     dashBoard.classList.remove('active');
+
+    // unload vue instance
+    document.head.removeChild(document.querySelector('#appScript'));
+    setTimeout(() => {
+      location.reload();
+    }, 200);
   }
 });

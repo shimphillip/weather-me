@@ -1,7 +1,8 @@
 require('dotenv').config();
-const functions = require('firebase-functions');
 const axios = require('axios');
+const moment = require('moment');
 const cors = require('cors')({ origin: true });
+const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
 
@@ -57,13 +58,34 @@ exports.storeUserInfo = functions.https.onCall(async (data, context) => {
 });
 
 exports.sendMessage = functions.https.onRequest((req, res) => {
+  // cors(req, res, async () => {
+  //   const snapshot = await admin.firestore().collection('users').get();
+
+  //   const docs = snapshot.docs.map((doc) => doc.data());
+
+  //   return res.send(docs);
+  // });
+
   cors(req, res, async () => {
     try {
       const { data } = await axios.get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=78754&APPID=${process.env.OPEN_WEATHER_MAP_API}`
       );
 
-      return res.status(200).send(data);
+      // next 15 hours
+      const list = data.list.slice(0, 7);
+
+      const formattedList = list.map(({ dt, weather, main }) => {
+        const temperature =
+          Math.round(((main.feels_like - 273.15) * 9) / 5 + 32) + '°F';
+        return {
+          time: moment.unix(dt).format('ha, dddd'),
+          weather: weather[0].description,
+          temperature,
+        };
+      });
+
+      return res.status(200).send(formattedList);
     } catch (error) {
       res.status(400).send(error);
     }

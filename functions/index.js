@@ -22,6 +22,21 @@ exports.userDeleted = functions.auth.user().onDelete((user) => {
   return doc.delete();
 });
 
+exports.getUserInfo = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      'unauthenticated',
+      'only authenticated users can add requests'
+    );
+  }
+
+  const user = admin.firestore().collection('users').doc(context.auth.uid);
+
+  const doc = await user.get();
+
+  return doc.data();
+});
+
 exports.sendMessage = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     try {

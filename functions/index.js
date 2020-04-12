@@ -31,9 +31,28 @@ exports.getUserInfo = functions.https.onCall(async (data, context) => {
   }
 
   const user = admin.firestore().collection('users').doc(context.auth.uid);
+  const doc = await user.get();
+  return doc.data();
+});
+
+exports.storeUserInfo = functions.https.onCall(async (data, context) => {
+  const { phoneNumber, zipcode, time } = data;
+
+  console.log('backend', {
+    phoneNumber,
+    zipcode,
+    time,
+  });
+
+  const user = admin.firestore().collection('users').doc(context.auth.uid);
+
+  await user.update({
+    phoneNumber,
+    zipcode,
+    time,
+  });
 
   const doc = await user.get();
-
   return doc.data();
 });
 

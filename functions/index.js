@@ -58,18 +58,15 @@ exports.storeUserInfo = functions.https.onCall(async (data, context) => {
 });
 
 exports.sendMessage = functions.https.onRequest((req, res) => {
-  // cors(req, res, async () => {
-  //   const snapshot = await admin.firestore().collection('users').get();
-
-  //   const docs = snapshot.docs.map((doc) => doc.data());
-
-  //   return res.send(docs);
-  // });
-
   cors(req, res, async () => {
     try {
+      const snapshot = await admin.firestore().collection('users').get();
+      const docs = snapshot.docs.map((doc) => doc.data());
+
+      const zipcode = docs[0].zipcode;
+
       const { data } = await axios.get(
-        `http://api.openweathermap.org/data/2.5/forecast?zip=78754&APPID=${process.env.OPEN_WEATHER_MAP_API}`
+        `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
       );
 
       // next 15 hours
@@ -85,29 +82,26 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
         };
       });
 
-      return res.status(200).send(formattedList);
+      const bodyText = formattedList
+        .map((obj) => {
+          return `Time is ${obj.time}, weather is ${obj.weather} and temperature is ${obj.temperature}`;
+        })
+        .join('\n');
+
+      const client = require('twilio')(
+        process.env.ACCOUNT_SID,
+        process.env.AUTH_TOKEN
+      );
+
+      const message = await client.messages.create({
+        body: bodyText,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: '+15125956354',
+      });
+
+      return res.status(200).send(message.sid);
     } catch (error) {
       res.status(400).send(error);
     }
   });
-
-  // const client = require('twilio')(
-  //   process.env.ACCOUNT_SID,
-  //   process.env.AUTH_TOKEN
-  // );
-
-  // client.messages
-  //   .create({
-  //     body: 'All in the game, yo',
-  //     from: process.env.TWILIO_PHONE_NUMBER,
-  //     to: '+15125956354',
-  //   })
-  //   .then((message) => {
-  //     console.log(message.sid);
-  //     return response.send(message.sid);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //     return response.send(error);
-  //   });
 });

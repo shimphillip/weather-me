@@ -75,16 +75,57 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
       const formattedList = list.map(({ dt, weather, main }) => {
         const temperature =
           Math.round(((main.feels_like - 273.15) * 9) / 5 + 32) + '°F';
+
+        let icon;
+
+        // https://openweathermap.org/weather-conditions
+        switch (weather[0].icon) {
+          case '01d':
+            icon = '☀';
+            break;
+          case '01n':
+            icon = '🌕';
+            break;
+          case '02d':
+          case '02n':
+          case '03d':
+          case '03n':
+          case '04d':
+          case '04n':
+            icon = '☁';
+            break;
+          case '09d':
+          case '09n':
+          case '10d':
+          case '10n':
+            icon = '🌧';
+            break;
+          case '11d':
+          case '11n':
+            icon = '⛈';
+            break;
+          case '13d':
+          case '13n':
+            icon = '❄';
+            break;
+          case '50d':
+          case '50n':
+            icon = '🌫';
+            break;
+          default:
+            icon = '';
+        }
+
         return {
           time: moment.unix(dt).utcOffset(-300).format('ha, dddd'),
-          weather: weather[0].description,
+          weather: icon + weather[0].description,
           temperature,
         };
       });
 
       const bodyText = formattedList
         .map((obj) => {
-          return `Time is ${obj.time}, weather is ${obj.weather} and temperature is ${obj.temperature}`;
+          return `${obj.time}\nWeather: ${obj.weather}\nTemperature: ${obj.temperature}\n`;
         })
         .join('\n');
 

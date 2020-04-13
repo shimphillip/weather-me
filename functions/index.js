@@ -79,7 +79,7 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
         const temperature =
           Math.round(((main.feels_like - 273.15) * 9) / 5 + 32) + '°F';
         return {
-          time: moment.unix(dt).format('ha, dddd'),
+          time: moment.unix(dt).utcOffset(-300).format('ha, dddd'),
           weather: weather[0].description,
           temperature,
         };

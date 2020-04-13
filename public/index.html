@@ -173,7 +173,7 @@
         </p>
         <hr class="my-4" />
 
-        <form class="dashboard-form" id="app">
+        <form class="dashboard-form" id="app" @submit.prevent="processForm">
           <fieldset>
             <div class="form-group">
               <label for="phoneNumber">Phone Number</label>
@@ -251,11 +251,9 @@
               </div>
             </div>
           </fieldset>
-        </form>
 
-        <p class="lead text-center">
-          <a class="send btn btn-primary btn-lg" href="#" role="button">Save</a>
-        </p>
+          <button type="submit" class="btn btn-primary save">Save</button>
+        </form>
       </div>
 
       <!-- vue js -->

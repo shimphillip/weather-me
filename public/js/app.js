@@ -6,18 +6,21 @@ const app = new Vue({
     time: 'sevenAM',
   },
   methods: {
-    // upvoteRequest(id) {
-    //   //console.log(id);
-    //   const upvote = firebase.functions().httpsCallable('upvote');
-    //   upvote({ id }).catch((error) => {
-    //     showNotification(error.message);
-    //   });
-    // },
+    processForm: function () {
+      const storeUserInfo = firebase.functions().httpsCallable('storeUserInfo');
+      storeUserInfo({
+        phoneNumber: this.phoneNumber,
+        zipcode: this.zipcode,
+        time: this.time,
+      })
+        .then((data) => console.log('data', data))
+        .catch((error) => console.log('error', error));
+    },
   },
   async mounted() {
-    const docInfo = firebase.functions().httpsCallable('getUserInfo');
+    const getUserInfo = firebase.functions().httpsCallable('getUserInfo');
 
-    const doc = await docInfo();
+    const doc = await getUserInfo();
     console.log(doc);
     const { phoneNumber, zipcode, time } = doc.data;
     this.phoneNumber = phoneNumber;

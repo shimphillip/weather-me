@@ -55,3 +55,9 @@ form.auth-modal {
 form.dashboard-form {
   border: none;
 }
+
+button.save {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}

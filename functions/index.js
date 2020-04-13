@@ -64,6 +64,7 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
       const docs = snapshot.docs.map((doc) => doc.data());
 
       const zipcode = docs[0].zipcode;
+      const phoneNumber = docs[0].phoneNumber
 
       const { data } = await axios.get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
@@ -134,10 +135,13 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
         process.env.AUTH_TOKEN
       );
 
+      const phoneNumberArr = phoneNumber.split("-");
+      const phone = '+1' + phoneNumberArr.join("");
+
       const message = await client.messages.create({
         body: bodyText,
         from: process.env.TWILIO_PHONE_NUMBER,
-        to: '+15125956354',
+        to: phone,
       });
 
       return res.status(200).send(message.sid);

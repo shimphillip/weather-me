@@ -2,7 +2,7 @@ const app = new Vue({
   el: '#app',
   data: {
     phoneNumber: '',
-    zipcode: 78754,
+    zipcode: '',
   },
   methods: {
     processForm: function () {
@@ -17,7 +17,6 @@ const app = new Vue({
   },
   async mounted() {
     const getUserInfo = firebase.functions().httpsCallable('getUserInfo');
-
     const doc = await getUserInfo();
     console.log(doc);
     const { phoneNumber, zipcode } = doc.data;

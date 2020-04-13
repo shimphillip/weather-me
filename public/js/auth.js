@@ -88,14 +88,9 @@ logout.addEventListener('click', () => {
 deleteAccount.addEventListener('click', () => {
   const user = firebase.auth().currentUser;
 
-  user
-    .delete()
-    .then(() => {
-      // TODO: alert user
-    })
-    .catch((error) => {
-      // An error happened.
-    });
+  user.delete().catch((error) => {
+    console.error(error);
+  });
 });
 
 // auth listener

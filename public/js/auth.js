@@ -116,6 +116,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // open login form
     authModals[1].classList.add('active');
     dashBoard.classList.remove('active');
+    registerForm.reset();
 
     // unload vue instance
     document.head.removeChild(document.querySelector('#appScript'));

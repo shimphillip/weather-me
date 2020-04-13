@@ -13,7 +13,6 @@ exports.newUserSignUp = functions.auth.user().onCreate((user) => {
     email: user.email,
     phoneNumber: '',
     zipcode: '',
-    time: '',
   });
 });
 
@@ -37,12 +36,11 @@ exports.getUserInfo = functions.https.onCall(async (data, context) => {
 });
 
 exports.storeUserInfo = functions.https.onCall(async (data, context) => {
-  const { phoneNumber, zipcode, time } = data;
+  const { phoneNumber, zipcode } = data;
 
   console.log('backend', {
     phoneNumber,
     zipcode,
-    time,
   });
 
   const user = admin.firestore().collection('users').doc(context.auth.uid);
@@ -50,7 +48,6 @@ exports.storeUserInfo = functions.https.onCall(async (data, context) => {
   await user.update({
     phoneNumber,
     zipcode,
-    time,
   });
 
   const doc = await user.get();
@@ -64,7 +61,7 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
       const docs = snapshot.docs.map((doc) => doc.data());
 
       const zipcode = docs[0].zipcode;
-      const phoneNumber = docs[0].phoneNumber
+      const phoneNumber = docs[0].phoneNumber;
 
       const { data } = await axios.get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
@@ -135,8 +132,8 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
         process.env.AUTH_TOKEN
       );
 
-      const phoneNumberArr = phoneNumber.split("-");
-      const phone = '+1' + phoneNumberArr.join("");
+      const phoneNumberArr = phoneNumber.split('-');
+      const phone = '+1' + phoneNumberArr.join('');
 
       const message = await client.messages.create({
         body: bodyText,
@@ -150,3 +147,102 @@ exports.sendMessage = functions.https.onRequest((req, res) => {
     }
   });
 });
+
+exports.scheduledFunctionCrontab = functions.pubsub
+  .schedule('0 8 * * *')
+  .timeZone('America/Chicago') // Users can choose timezone - default is America/Los_Angeles
+  .onRun((context) => {
+    cors(req, res, async () => {
+      try {
+        const snapshot = await admin.firestore().collection('users').get();
+        const docs = snapshot.docs.map((doc) => doc.data());
+
+        const zipcode = docs[0].zipcode;
+        const phoneNumber = docs[0].phoneNumber;
+
+        const { data } = await axios.get(
+          `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
+        );
+
+        // next 15 hours
+        const list = data.list.slice(0, 7);
+
+        const formattedList = list.map(({ dt, weather, main }) => {
+          const temperature =
+            Math.round(((main.feels_like - 273.15) * 9) / 5 + 32) + '°F';
+
+          let icon;
+
+          // https://openweathermap.org/weather-conditions
+          switch (weather[0].icon) {
+            case '01d':
+              icon = '☀';
+              break;
+            case '01n':
+              icon = '🌕';
+              break;
+            case '02d':
+            case '02n':
+            case '03d':
+            case '03n':
+            case '04d':
+            case '04n':
+              icon = '☁';
+              break;
+            case '09d':
+            case '09n':
+            case '10d':
+            case '10n':
+              icon = '🌧';
+              break;
+            case '11d':
+            case '11n':
+              icon = '⛈';
+              break;
+            case '13d':
+            case '13n':
+              icon = '❄';
+              break;
+            case '50d':
+            case '50n':
+              icon = '🌫';
+              break;
+            default:
+              icon = '';
+          }
+
+          return {
+            time: moment.unix(dt).utcOffset(-300).format('ha, dddd'),
+            weather: icon + weather[0].description,
+            temperature,
+          };
+        });
+
+        const bodyText = formattedList
+          .map((obj) => {
+            return `${obj.time}\nWeather: ${obj.weather}\nTemperature: ${obj.temperature}\n`;
+          })
+          .join('\n');
+
+        const client = require('twilio')(
+          process.env.ACCOUNT_SID,
+          process.env.AUTH_TOKEN
+        );
+
+        const phoneNumberArr = phoneNumber.split('-');
+        const phone = '+1' + phoneNumberArr.join('');
+
+        const message = await client.messages.create({
+          body: bodyText,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: phone,
+        });
+
+        return `ran successfully. ${message.sid}`;
+      } catch (error) {
+        return 'not run successfully';
+      }
+    });
+
+    return 'ran succesfully';
+  });

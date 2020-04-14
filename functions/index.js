@@ -36,7 +36,7 @@ exports.getUserInfo = functions.https.onCall(async (data, context) => {
   return doc.data();
 });
 
-// HTTP request
+// HTTP request. This gets fired when a user clicks on save
 exports.storeUserInfo = functions.https.onCall(async (data, context) => {
   const { phoneNumber, zipcode } = data;
 
@@ -58,7 +58,7 @@ exports.storeUserInfo = functions.https.onCall(async (data, context) => {
 
 // scheduled function
 exports.scheduledFunctionCrontab = functions.pubsub
-  .schedule('55 7 * * *') // fires off alarm at at 7:55AM since it may take few minutes to fire
+  .schedule('55 7 * * *') // fires off alarm at at 7:55AM. Takes about 5 minutes
   .timeZone('America/Chicago') // Defaults to central time
   .onRun(async (context) => {
     const waitFor = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -134,7 +134,7 @@ exports.scheduledFunctionCrontab = functions.pubsub
 
       const bodyText = formattedList
         .map((obj) => {
-          return `${obj.time}\nWeather: ${obj.weather}\nTemperature: ${obj.temperature}\n`;
+          return `${obj.time}\nWeather: ${obj.weather} ${obj.temperature}\n`;
         })
         .join('\n');
 

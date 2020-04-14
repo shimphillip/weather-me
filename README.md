@@ -54,6 +54,10 @@ firebase deploy --only functions
 
 ## Gotchas
 
+The 3-hour forecasts don't give information about the current time the API call is made. Therefore, when you receive the text in the morning around 8 AM, it will likely give start from 9 AM or 10 AM.
+
+Notice the demo is only available in U.S. The scheduled to receive texts are in Central Time. 
+
 Be patient! These firebase lambdas functions unfortunately take a long time to wake up from hibernation if they haven't been used for a long time. I am talking 5-10 seconds and maybe up to 20 seconds 💩. I haven't implemented spinners or alerts to notify the loading state yet. So I would at least wait 10 seconds when making CRUD operations.
 
 ## Extra Todos

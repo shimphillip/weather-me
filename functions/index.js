@@ -78,8 +78,8 @@ exports.scheduledFunctionCrontab = functions.pubsub
         `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
       );
 
-      // next 15 hours
-      const list = data.list.slice(0, 7);
+      // next 15-18 hours
+      const list = data.list.slice(0, 6);
 
       const formattedList = list.map(({ dt, weather, main }) => {
         const temperature =

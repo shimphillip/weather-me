@@ -4,12 +4,12 @@
 2. [Intro Post](https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o)
 3. [Wrap up Post](https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o)
 
+![screenshot](./docs/text-message.jpg)
 ![screenshot2](./docs/dashboard.png)
-Text Message Image
 
 ## Getting Started
 
-Visit to see the live app https://just-todo-it.netlify.com/
+Visit to see the live app https://weather-me-54a7d.web.app/
 
 ### Prerequisites
 
@@ -54,8 +54,7 @@ firebase deploy --only functions
 
 ## Gotchas
 
-Be patient! These lambdas take a long time to wake up from hibernation. 
-May take few seconds for CRUD operations
+Be patient! These firebase lambdas functions unfortunately take a long time to wake up from hibernation if they haven't been used for a long time. I am talking 5-10 seconds and maybe up to 20 seconds 💩. I haven't implemented spinners or alerts to notify the loading state yet. So I would at least wait 10 seconds when making CRUD operations.
 
 ## Extra Todos
 

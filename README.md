@@ -6,24 +6,51 @@ First dev.to thread
 
 https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o
 
-To develop locally run
+# Weather Me
 
+![screenshot](./docs/screenshot.png)
+
+## Getting Started
+
+Visit to see the live app https://just-todo-it.netlify.com/
+
+### Prerequisites
+
+`Git & NPM & Firebase CLI`
+
+https://firebase.google.com/docs/cli?hl=vi#mac-linux-npm
+
+### Installation steps
+
+```zsh
+# clone the repo
+git clone https://github.com/shimphillip/weather-me.git
+
+# navigate to the functions directory
+cd weather-me/functions
+
+# install packages
+npm install or yarn
+
+# start the app
 firebase serve
 
-to deploy only functions
+# Deploy functions
 firebase deploy --only functions
+```
 
-Todo
+## Deployment
 
-1. Register User
-2. Give users a settings page
-3. User can ask to receive daily forecast each morning
-4. user receives a message
+Easy deployment with netlify :)
 
-// Method 1
-Create multiple scheduled functions that run one hour interval.
-Scrape through all the users in the database and see if their info matches this timeset
-Run the function
+## Versioning
 
-// Method 2
-Simply creat one scheduled function and have all users receive the texts
+1.0.0
+
+## Authors
+
+- **Phillip Shim**
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

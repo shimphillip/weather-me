@@ -51,3 +51,11 @@ Easy deployment with netlify :)
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Extra Todos
+
+- [ ] Handle Errors (Make the app not crash if not following the happy path)
+- [ ] Make fields in DB unique (email and phone number)
+- [ ] Allow users to choose a time when they can receive text messsages
+- [ ] Make the app interactive. Send commands to the twilio phone number and receive something back
+- [ ] And some more...

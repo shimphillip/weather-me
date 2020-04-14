@@ -32,13 +32,17 @@ npm install or yarn
 # start the app
 firebase serve
 
-# Deploy functions
-firebase deploy --only functions
 ```
 
 ## Deployment
 
-Easy deployment with netlify :)
+```zsh
+# deploy the app
+firebase deploy
+
+# deploy only cloud functions
+firebase deploy --only functions
+```
 
 ## Versioning
 
@@ -48,14 +52,22 @@ Easy deployment with netlify :)
 
 - **Phillip Shim**
 
-## License
+## Gotchas
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Be patient! These lambdas take a long time to wake up from hibernation. 
+May take few seconds for CRUD operations
 
 ## Extra Todos
 
+- [ ] Add testing (Look at emulators)
+- [ ] Wrap it in a docker container
+- [ ] Make it fully responsive
 - [ ] Handle Errors (Make the app not crash if not following the happy path)
 - [ ] Make fields in DB unique (email and phone number)
 - [ ] Allow users to choose a time when they can receive text messsages
 - [ ] Make the app interactive. Send commands to the twilio phone number and receive something back
 - [ ] And some more...
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

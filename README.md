@@ -1,14 +1,11 @@
-<!-- Official challenge page -->
-
-https://dev.to/devteam/announcing-the-twilio-hackathon-on-dev-2lh8
-
-First dev.to thread
-
-https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o
-
 # Weather Me
 
-![screenshot](./docs/screenshot.png)
+1. [Official Hackathon Challenge Post](https://dev.to/devteam/announcing-the-twilio-hackathon-on-dev-2lh8)
+2. [Intro Post](https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o)
+3. [Wrap up Post](https://dev.to/shimphillip/get-customized-weather-updates-through-sms-231o)
+
+![screenshot2](./docs/dashboard.png)
+Text Message Image
 
 ## Getting Started
 

@@ -74,6 +74,10 @@ exports.scheduledFunctionCrontab = functions.pubsub
       const zipcode = doc.zipcode;
       const phoneNumber = doc.phoneNumber;
 
+      if (!zipcode || !phoneNumber) {
+        return;
+      }
+
       const { data } = await axios.get(
         `http://api.openweathermap.org/data/2.5/forecast?zip=${zipcode}&APPID=${process.env.OPEN_WEATHER_MAP_API}`
       );
